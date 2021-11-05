@@ -1,0 +1,4 @@
+---
+- hosts: "nifi-nodes"
+  roles:
+  - nifi

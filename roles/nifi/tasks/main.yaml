@@ -1,0 +1,62 @@
+- name: install java
+  package:
+    name: "{{java_pkgname}}"
+    state: present
+
+- name: get nifi archive
+  get_url:
+    url:  "{{nifi_download_link}}"
+    dest: /tmp/nifi.tar.gz
+
+- name: create tmp dir
+  file:
+    path: /tmp/nifi_install_tmp
+    state: directory
+
+- name: untar nifi
+  unarchive:
+    src: /tmp/nifi.tar.gz
+    dest: /tmp/nifi_install_tmp
+    remote_src: yes
+
+- name: add nifi user
+  user:
+    name: nifi
+    system: yes
+    home: "{{installation_path}}"
+    state: present
+
+- name: nifi rename dir
+  shell: |
+    find /tmp/nifi_install_tmp -type d -iname "nifi-*" -exec cp -rf {} {{installation_path}} \;    
+
+- name: rm tmp dir
+  file: 
+    path: /tmp/nifi_install_tmp
+    state: absent
+
+- name: set ownership to nifi installation path
+  file: 
+    path: "{{installation_path}}"
+    owner: nifi
+    group: nifi 
+    recurse: yes
+
+- name: create systemd service
+  template:
+    src: nifi.service.j2
+    dest: /etc/systemd/system/nifi.service
+    force: yes
+
+- name: place our nifi.properties
+  template:
+    src: nifi.properties.j2
+    dest: /opt/nifi/conf/nifi.properties
+    force: yes
+
+- name: enable and start nifi
+  systemd:
+    name: nifi
+    state: started
+    daemon_reload: yes
+    enabled: yes

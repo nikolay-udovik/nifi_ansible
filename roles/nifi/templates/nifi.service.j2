@@ -1,0 +1,13 @@
+     [Unit]
+     Description=Apache NiFi
+     After=network.target
+
+     [Service]
+     Type=forking
+     User=nifi
+     Group=nifi
+     ExecStart="{{installation_path}}"/bin/nifi.sh start
+     ExecStop="{{installation_path}}"/bin/nifi.sh stop
+
+     [Install]
+     WantedBy=multi-user.target
