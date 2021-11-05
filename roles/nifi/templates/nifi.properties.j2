@@ -137,7 +137,7 @@ nifi.status.repository.questdb.persist.location=./status_repository
 
 # Site to Site properties
 nifi.remote.input.host=
-nifi.remote.input.secure=true
+nifi.remote.input.secure=false
 nifi.remote.input.socket.port=
 nifi.remote.input.http.enabled=true
 nifi.remote.input.http.transaction.ttl=30 sec
@@ -156,11 +156,11 @@ nifi.web.http.network.interface.default=
 
 #############################################
 
-nifi.web.https.host=127.0.0.1
-nifi.web.https.port=8443
+nifi.web.https.host=
+nifi.web.https.port=
 nifi.web.https.network.interface.default=
-nifi.web.jetty.working.directory=./work/jetty
-nifi.web.jetty.threads=200
+nifi.web.jetty.working.directory=
+nifi.web.jetty.threads=
 nifi.web.max.header.size=16 KB
 nifi.web.proxy.context.path=
 nifi.web.proxy.host=
@@ -191,7 +191,7 @@ nifi.security.truststore=./conf/truststore.p12
 nifi.security.truststoreType=PKCS12
 nifi.security.truststorePasswd=b74589f5b4c2e8b7faa0f5b41a464909
 nifi.security.user.authorizer=single-user-authorizer
-nifi.security.allow.anonymous.authentication=false
+nifi.security.allow.anonymous.authentication=true
 nifi.security.user.login.identity.provider=single-user-provider
 nifi.security.ocsp.responder.url=
 nifi.security.ocsp.responder.certificate=
